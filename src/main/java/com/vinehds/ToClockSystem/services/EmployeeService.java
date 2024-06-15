@@ -2,8 +2,12 @@ package com.vinehds.ToClockSystem.services;
 
 import com.vinehds.ToClockSystem.entities.Employee;
 import com.vinehds.ToClockSystem.repositories.EmployeeRepository;
-import jakarta.persistence.Entity;
+import com.vinehds.ToClockSystem.services.exceptions.DatabaseException;
+import com.vinehds.ToClockSystem.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +25,7 @@ public class EmployeeService {
 
     public Employee findById(Long id){
         Optional<Employee> obj = repository.findById(id);
-        return obj.get();
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     public Employee insert(Employee obj){
@@ -29,13 +33,24 @@ public class EmployeeService {
     }
 
     public void delete(Long id){
-        repository.deleteById(id);
+        try {
+            repository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundException(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException(e.getMessage());
+        }
     }
 
     public Employee update(Long id, Employee obj){
-        Employee entity = repository.getReferenceById(id);
-        updateData(entity, obj);
-        return repository.save(entity);
+        try {
+            Employee entity = repository.getReferenceById(id);
+            updateData(entity, obj);
+            return repository.save(entity);
+        }
+        catch (EntityNotFoundException e){
+            throw new ResourceNotFoundException(id);
+        }
     }
 
     private void updateData(Employee entity, Employee obj) {
