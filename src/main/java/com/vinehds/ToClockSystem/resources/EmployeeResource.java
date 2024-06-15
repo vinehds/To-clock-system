@@ -37,5 +37,15 @@ public class EmployeeResource {
         return ResponseEntity.created(uri).body(emp);
     }
 
-    
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Employee> update(@PathVariable Long id, @RequestBody Employee obj){
+        Employee updateEmp = service.update(id, obj);
+        return ResponseEntity.ok().body(updateEmp);
+    }
 }
