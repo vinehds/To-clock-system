@@ -4,11 +4,10 @@ import com.vinehds.ToClockSystem.entities.Employee;
 import com.vinehds.ToClockSystem.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -29,4 +28,14 @@ public class EmployeeResource {
         Employee emp = service.findById(id);
         return ResponseEntity.ok().body(emp);
     }
+
+    @PostMapping
+    public ResponseEntity<Employee> insert (@RequestBody Employee emp){
+        emp = service.insert(emp);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(emp.getId()).toUri();
+        return ResponseEntity.created(uri).body(emp);
+    }
+
+    
 }

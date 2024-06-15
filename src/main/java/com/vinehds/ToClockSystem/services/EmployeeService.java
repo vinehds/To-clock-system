@@ -22,4 +22,8 @@ public class EmployeeService {
         Optional<Employee> obj = repository.findById(id);
         return obj.get();
     }
+
+    public Employee insert(Employee obj){
+        return repository.save(obj);
+    }
 }
