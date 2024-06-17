@@ -61,4 +61,13 @@ public class EmployeeService {
         entity.setGender(obj.getGender());
     }
 
+
+    //metodos para criar endpoint para adicionar registros
+
+    public Employee addRecord(Long id, Record record){
+        Employee obj = repository.getReferenceById(id);
+        obj.addRecord(record);
+        return repository.save(obj);
+    }
+
 }

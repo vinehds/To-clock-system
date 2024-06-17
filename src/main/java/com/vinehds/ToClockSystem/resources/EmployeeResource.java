@@ -50,4 +50,10 @@ public class EmployeeResource {
         return ResponseEntity.ok().body(updateEmp);
     }
 
+    @PutMapping(value = "/{id}/add")
+    public ResponseEntity<Employee> addRecord(@PathVariable Long id, @RequestBody Record rec){
+        Employee entity = service.addRecord(id, rec);
+        return ResponseEntity.ok().body(entity);
+    }
+
 }

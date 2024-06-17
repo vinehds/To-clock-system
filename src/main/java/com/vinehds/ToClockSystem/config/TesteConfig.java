@@ -30,10 +30,10 @@ public class TesteConfig implements CommandLineRunner {
 
         employeeRepository.saveAll(Arrays.asList(emp1, emp2, emp3));
 
-        Record rec1 = new Record(Clock.IN, null);
-        Record rec2 = new Record(Clock.OUT, null);
-        Record rec3 = new Record(Clock.IN, null);
-        Record rec4 = new Record(Clock.OUT, null);
+        Record rec1 = new Record(null, null);
+        Record rec2 = new Record(null, null);
+        Record rec3 = new Record(null, null);
+        Record rec4 = new Record(null, null);
 
         recordRepository.saveAll(Arrays.asList(rec1, rec2, rec3, rec4));
 
