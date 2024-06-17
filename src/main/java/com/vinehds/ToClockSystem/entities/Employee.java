@@ -1,9 +1,14 @@
 package com.vinehds.ToClockSystem.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.vinehds.ToClockSystem.entities.enums.Clock;
 import com.vinehds.ToClockSystem.entities.enums.Gender;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -15,7 +20,12 @@ public class Employee implements Serializable {
     private String name;
     private String email;
     private Integer age;
-    private Gender gender;
+    private Integer gender;
+
+
+
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Record> records = new ArrayList<>();
 
     public Employee() {
     }
@@ -25,7 +35,7 @@ public class Employee implements Serializable {
         this.name = name;
         this.email = email;
         this.age = age;
-        this.gender = gender;
+        setGender(gender);
     }
 
     public Long getId() {
@@ -61,12 +71,40 @@ public class Employee implements Serializable {
     }
 
     public Gender getGender() {
-        return gender;
+        return Gender.valueOf(gender);
     }
 
     public void setGender(Gender gender) {
-        this.gender = gender;
+        if (gender != null) {
+            this.gender = gender.getCode();
+        }
     }
+
+    public List<Record> getRecords() {
+        return records;
+    }
+
+
+    public void addRecord(Record record){
+        if(records.isEmpty()){
+            record.setTipo(Clock.IN);
+        }
+        else if(records.get(records.size()-1).getTipo() == Clock.IN){
+            record.setTipo(Clock.OUT);
+        }
+        else{
+            record.setTipo((Clock.IN));
+        }
+
+        if(record.getMoment() == null){
+            record.setMoment(Instant.now());
+        }
+
+        records.add(record);
+        record.setEmployee(this);
+    }
+
+
 
     @Override
     public boolean equals(Object o) {

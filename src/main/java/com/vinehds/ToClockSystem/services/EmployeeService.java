@@ -1,6 +1,7 @@
 package com.vinehds.ToClockSystem.services;
 
 import com.vinehds.ToClockSystem.entities.Employee;
+import com.vinehds.ToClockSystem.entities.Record;
 import com.vinehds.ToClockSystem.repositories.EmployeeRepository;
 import com.vinehds.ToClockSystem.services.exceptions.DatabaseException;
 import com.vinehds.ToClockSystem.services.exceptions.ResourceNotFoundException;
@@ -19,20 +20,20 @@ public class EmployeeService {
     @Autowired
     private EmployeeRepository repository;
 
-    public List<Employee> findAll(){
+    public List<Employee> findAll() {
         return repository.findAll();
     }
 
-    public Employee findById(Long id){
+    public Employee findById(Long id) {
         Optional<Employee> obj = repository.findById(id);
         return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
-    public Employee insert(Employee obj){
+    public Employee insert(Employee obj) {
         return repository.save(obj);
     }
 
-    public void delete(Long id){
+    public void delete(Long id) {
         try {
             repository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
@@ -42,13 +43,12 @@ public class EmployeeService {
         }
     }
 
-    public Employee update(Long id, Employee obj){
+    public Employee update(Long id, Employee obj) {
         try {
             Employee entity = repository.getReferenceById(id);
             updateData(entity, obj);
             return repository.save(entity);
-        }
-        catch (EntityNotFoundException e){
+        } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException(id);
         }
     }
@@ -60,4 +60,5 @@ public class EmployeeService {
         entity.setAge(obj.getAge());
         entity.setGender(obj.getGender());
     }
+
 }

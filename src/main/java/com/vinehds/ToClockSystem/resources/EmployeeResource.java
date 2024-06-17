@@ -1,6 +1,7 @@
 package com.vinehds.ToClockSystem.resources;
 
 import com.vinehds.ToClockSystem.entities.Employee;
+import com.vinehds.ToClockSystem.entities.Record;
 import com.vinehds.ToClockSystem.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,19 +19,19 @@ public class EmployeeResource {
     private EmployeeService service;
 
     @GetMapping
-    public ResponseEntity<List<Employee>> findAll(){
+    public ResponseEntity<List<Employee>> findAll() {
         List<Employee> list = service.findAll();
         return ResponseEntity.ok().body(list);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Employee> findById(@PathVariable Long id){
+    public ResponseEntity<Employee> findById(@PathVariable Long id) {
         Employee emp = service.findById(id);
         return ResponseEntity.ok().body(emp);
     }
 
     @PostMapping
-    public ResponseEntity<Employee> insert (@RequestBody Employee emp){
+    public ResponseEntity<Employee> insert(@RequestBody Employee emp) {
         emp = service.insert(emp);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(emp.getId()).toUri();
@@ -38,14 +39,15 @@ public class EmployeeResource {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id){
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Employee> update(@PathVariable Long id, @RequestBody Employee obj){
+    public ResponseEntity<Employee> update(@PathVariable Long id, @RequestBody Employee obj) {
         Employee updateEmp = service.update(id, obj);
         return ResponseEntity.ok().body(updateEmp);
     }
+
 }
