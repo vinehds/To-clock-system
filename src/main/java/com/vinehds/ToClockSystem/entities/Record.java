@@ -2,11 +2,16 @@ package com.vinehds.ToClockSystem.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vinehds.ToClockSystem.entities.enums.Clock;
+import com.vinehds.ToClockSystem.entities.enums.Gender;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
 
+import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+
 @Entity
 public class Record implements Serializable {
 
@@ -52,6 +57,7 @@ public class Record implements Serializable {
     public Employee getEmployee() {
         return employee;
     }
+
 
     public void setEmployee(Employee employee) {
         this.employee = employee;

@@ -1,8 +1,8 @@
 package com.vinehds.ToClockSystem.entities.enums;
 
 public enum Gender {
-    MALE(1),
-    FEMALE(2);
+    MALE(0),
+    FEMALE(1);
 
     private int code;
 

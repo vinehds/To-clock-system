@@ -1,15 +1,15 @@
 package com.vinehds.ToClockSystem.entities.enums;
 
 public enum Clock {
-    IN(1),
-    OUT(2);
+    IN(0),
+    OUT(1);
 
     private int code;
     private Clock (int code){
         this.code = code;
     }
 
-    public int getCode(){
+    public Integer getCode(){
         return code;
     }
 
