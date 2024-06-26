@@ -1,6 +1,5 @@
 package com.vinehds.ToClockSystem.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vinehds.ToClockSystem.entities.enums.Clock;
 import com.vinehds.ToClockSystem.entities.enums.Gender;
 import jakarta.persistence.*;
@@ -87,13 +86,13 @@ public class Employee implements Serializable {
 
     public void addRecord(Record record){
         if(records.isEmpty()){
-            record.setTipo(Clock.IN);
+            record.setClock(Clock.IN);
         }
-        else if(records.get(records.size()-1).getTipo() == Clock.IN){
-            record.setTipo(Clock.OUT);
+        else if(records.get(records.size()-1).getClock() == Clock.IN){
+            record.setClock(Clock.OUT);
         }
         else{
-            record.setTipo((Clock.IN));
+            record.setClock((Clock.IN));
         }
 
         if(record.getMoment() == null){

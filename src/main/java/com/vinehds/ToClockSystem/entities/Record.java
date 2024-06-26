@@ -2,15 +2,13 @@ package com.vinehds.ToClockSystem.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vinehds.ToClockSystem.entities.enums.Clock;
-import com.vinehds.ToClockSystem.entities.enums.Gender;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
 
-import java.text.SimpleDateFormat;
+
 import java.time.Instant;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
+
 
 @Entity
 public class Record implements Serializable {
@@ -18,7 +16,7 @@ public class Record implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Clock tipo;
+    private Clock clock;
     private Instant moment;
 
     @JsonIgnore
@@ -29,21 +27,21 @@ public class Record implements Serializable {
     public Record() {
     }
 
-    public Record(Clock value, Instant moment) {
+    public Record(Clock clock, Instant moment) {
 
         if (moment == null){
             moment = Instant.now();
         }
-        this.tipo = value;
+        this.clock = clock;
         this.moment = moment;
     }
 
-    public Clock getTipo() {
-        return tipo;
+    public Clock getClock() {
+        return clock;
     }
 
-    public void setTipo(Clock tipo) {
-        this.tipo = tipo;
+    public void setClock(Clock clock) {
+        this.clock = clock;
     }
 
     public Instant getMoment() {

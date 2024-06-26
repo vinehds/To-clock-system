@@ -24,6 +24,9 @@ public class TesteConfig implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
+        employeeRepository.deleteAll();
+        recordRepository.deleteAll();
+
         Employee emp1 = new Employee(null, "Vinicius Henrique", "vine@gmail.com", 19, Gender.MALE);
         Employee emp2 = new Employee(null, "Luzia Lucia", "luzia@gmail.com", 30, Gender.FEMALE);
         Employee emp3 = new Employee(null, "Matheus Silva", "mths@gmail.com", 25, Gender.MALE);
