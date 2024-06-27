@@ -56,4 +56,8 @@ public class EmployeeResource {
         return ResponseEntity.ok().body(entity);
     }
 
+    @GetMapping(value = "/{id}/hours")
+    public long getHours (@PathVariable Long id) throws Exception {
+        return service.workedHours(id);
+    }
 }

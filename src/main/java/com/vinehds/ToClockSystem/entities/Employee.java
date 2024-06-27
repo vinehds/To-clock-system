@@ -5,6 +5,7 @@ import com.vinehds.ToClockSystem.entities.enums.Gender;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +21,6 @@ public class Employee implements Serializable {
     private String email;
     private Integer age;
     private Integer gender;
-
-
 
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Record> records = new ArrayList<>();
@@ -103,6 +102,28 @@ public class Employee implements Serializable {
         record.setEmployee(this);
     }
 
+
+    public long workedHours() throws Exception {
+        if (records.size() % 2 != 0) {
+            throw new Exception("Usuário com registros ímpares, expediente em andamento");
+        }
+
+        long workedHours;
+        Duration workedDuration = Duration.ZERO;
+        Instant entrada, saida;
+
+        for (int i = 0; i < records.size(); i = i + 2) {
+            entrada = records.get(i).getMoment();
+            saida = records.get(i + 1).getMoment();
+
+            Duration duration = Duration.between(entrada, saida);
+            workedDuration = workedDuration.plus(duration);
+        }
+
+        workedHours = workedDuration.toMinutes();
+        workedHours = workedHours / 60;
+        return workedHours;
+    }
 
 
     @Override

@@ -6,6 +6,7 @@ import com.vinehds.ToClockSystem.repositories.EmployeeRepository;
 import com.vinehds.ToClockSystem.services.exceptions.DatabaseException;
 import com.vinehds.ToClockSystem.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.InvalidPropertyException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -62,8 +63,7 @@ public class EmployeeService {
     }
 
 
-    //metodos para criar endpoint para adicionar registros
-
+    //metodo para criar endpoint para adicionar registros
     public Employee addRecord(Long id, Record record) {
         try {
             Employee obj = repository.getReferenceById(id);
@@ -74,4 +74,13 @@ public class EmployeeService {
         }
     }
 
+    //metodo para obter as horas trabalhadas
+    public long workedHours(Long id) throws Exception {
+        try {
+            Employee obj = repository.getReferenceById(id);
+            return obj.workedHours();
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException(id);
+        }
+    }
 }

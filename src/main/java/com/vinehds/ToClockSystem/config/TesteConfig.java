@@ -1,4 +1,4 @@
-package com.vinehds.ToClockSystem.config;
+/* package com.vinehds.ToClockSystem.config;
 
 import com.vinehds.ToClockSystem.entities.Employee;
 import com.vinehds.ToClockSystem.entities.Record;
@@ -24,8 +24,8 @@ public class TesteConfig implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        employeeRepository.deleteAll();
         recordRepository.deleteAll();
+        employeeRepository.deleteAll();
 
         Employee emp1 = new Employee(null, "Vinicius Henrique", "vine@gmail.com", 19, Gender.MALE);
         Employee emp2 = new Employee(null, "Luzia Lucia", "luzia@gmail.com", 30, Gender.FEMALE);
@@ -49,3 +49,4 @@ public class TesteConfig implements CommandLineRunner {
         employeeRepository.save(emp1);
     }
 }
+*/

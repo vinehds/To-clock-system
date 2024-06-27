@@ -11,6 +11,7 @@ import java.time.Instant;
 
 
 @Entity
+@Table(name = "tb_records")
 public class Record implements Serializable {
 
     @Id
